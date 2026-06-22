@@ -1,106 +1,22 @@
 # 🏥 Plum Health Insurance Claims Processing System
 
-**An explainable, fault-tolerant, multi-agent claims adjudication system built for Plum's AI Engineer Assignment.**
+**An explainable, policy-driven, fault-tolerant claims adjudication system built for Plum's AI Engineer Assignment.**
 
 🚀 **Live Demo:** https://plumassmnt.streamlit.app/
 
 ---
 
-# 📖 Table of Contents
+# Overview
 
-1. Overview
-2. Assignment Deliverables
-3. Problem Statement
-4. Solution Overview
-5. Why This Architecture?
-6. Technology Choices
-7. System Architecture
-8. Agent Responsibilities
-9. Component Contracts
-10. Setup & Installation
-11. Usage Guide
-12. Evaluation Report
-13. Design Tradeoffs
-14. Limitations
-15. Future Improvements
-16. Conclusion
+This project automates health insurance claim processing by validating submitted documents, extracting structured medical information, applying policy rules, detecting fraud signals, and producing transparent claim decisions.
 
----
+The system is designed around five key principles:
 
-# ✅ Assignment Deliverables
-
-This repository contains all deliverables requested in the assignment:
-
-* ✅ Working System
-* ✅ Streamlit-based User Interface
-* ✅ Architecture Document
-* ✅ Component Contracts
-* ✅ Evaluation Report covering all 12 provided test cases
-* ✅ Setup Instructions
-* ✅ Usage Guide
-* ✅ Explainable Decision Traces
-* ✅ Fault-Tolerant Processing Pipeline
-
-**Live Application**
-
-https://plumassmnt.streamlit.app/
-
----
-
-# 🎯 Problem Statement
-
-Health insurance claim processing is traditionally manual, requiring reviewers to inspect prescriptions, hospital bills, pharmacy invoices, diagnostic reports, and policy terms before approving or rejecting claims.
-
-This approach is:
-
-* Slow
-* Difficult to scale
-* Prone to inconsistency
-* Expensive to operate
-
-The objective of this assignment is to automate the process while maintaining:
-
-* Reliability
 * Explainability
+* Determinism
+* Reliability
 * Configurability
-* Fault Tolerance
 * Scalability
-
----
-
-# 💡 Solution Overview
-
-The system follows a deterministic multi-agent architecture where each agent is responsible for a single task.
-
-```text
-Claim Submission
-       │
-       ▼
-Document Verification
-       │
-       ▼
-Information Extraction
-       │
-       ▼
-Policy Adjudication
-       │
-       ▼
-Fraud Analysis
-       │
-       ▼
-Decision Engine
-       │
-       ▼
-Decision + Trace
-```
-
-The final output contains:
-
-* Decision
-* Approved Amount
-* Confidence Score
-* Reasons
-* Complete Processing Trace
 
 Supported decisions:
 
@@ -111,482 +27,217 @@ REJECTED
 MANUAL_REVIEW
 ```
 
----
+Every decision includes:
 
-# 🏗 Why This Architecture?
-
-The architecture was designed around Plum's core requirements.
-
-| Requirement     | Design Choice                | Reason                                     |
-| --------------- | ---------------------------- | ------------------------------------------ |
-| Explainability  | Trace-based processing       | Every decision is auditable                |
-| Reliability     | Deterministic rule engine    | Prevents inconsistent outcomes             |
-| Scalability     | Modular agents               | Components can scale independently         |
-| Configurability | Policy stored in JSON        | No hardcoded insurance logic               |
-| Fault Tolerance | Graceful degradation         | Component failures do not crash the system |
-| Maintainability | Single-responsibility agents | Easier testing and upgrades                |
+* Approved amount
+* Confidence score
+* Decision rationale
+* Full processing trace
 
 ---
 
-# ⚙️ Technology Choices
+# Assignment Deliverables
 
-## Streamlit
+This repository contains all requested deliverables:
 
-Chosen because:
-
-* Rapid development
-* Clean user interface
-* Minimal frontend complexity
-* Ideal for demonstrating AI workflows
-
-## Python
-
-Chosen because:
-
-* Excellent AI ecosystem
-* Strong JSON and data processing support
-* Fast prototyping
-* Easy maintainability
-
-## Llama 3.3 (Groq)
-
-Chosen because:
-
-* Strong reasoning capabilities
-* Reliable structured JSON generation
-* Low inference latency
-* Effective extraction and classification performance
-
-## Tesseract OCR
-
-Chosen because:
-
-* Open source
-* Easy integration
-* Supports PDFs and images
-* Sufficient for assignment-scale document processing
-
-## JSON Policy Store
-
-Chosen because:
-
-* Policy rules remain configurable
-* No code changes required for policy updates
-* Easy auditing and version control
-
-## Modular Multi-Agent Design
-
-Chosen because:
-
-* Clear responsibilities
-* Better observability
-* Easier testing
-* Independent future scaling
+| Deliverable           | Status |
+| --------------------- | ------ |
+| Working System        | ✅      |
+| Architecture Document | ✅      |
+| Component Contracts   | ✅      |
+| Evaluation Report     | ✅      |
+| Setup Instructions    | ✅      |
+| Explainable Traces    | ✅      |
 
 ---
 
-# 🏛 System Architecture
+# Live Application
+
+### Deployed URL
 
 ```text
-┌────────────────────────────┐
-│       Streamlit UI         │
-└─────────────┬──────────────┘
-              │
-              ▼
-┌────────────────────────────┐
-│     Claim Processor        │
-│      (Orchestrator)        │
-└─────────────┬──────────────┘
-              │
- ┌────────────┼────────────┐
- │            │            │
- ▼            ▼            ▼
-
-Document    Extraction   Policy
-Validator     Agent      Engine
-
-              │
-              ▼
-
-       Fraud Detection
-
-              │
-              ▼
-
-       Decision Engine
-
-              │
-              ▼
-
-        Final Output
+https://plumassmnt.streamlit.app/
 ```
 
 ---
 
-# 🤖 Agent Responsibilities
+# Repository Documentation
 
-## 1. Document Verification Agent
+## Architecture Document
 
-Responsibilities:
+Detailed architecture rationale, component interactions, scaling strategy, and design decisions:
 
-* Validate document completeness
-* Validate document types
-* Detect missing documents
-* Detect mismatched submissions
+```text
+docs/architecture.md
+```
 
-Output:
+## Component Contracts
 
-```json
-{
-  "valid": true,
-  "errors": []
-}
+Formal interfaces for every major component including inputs, outputs, and failure behaviour:
+
+```text
+docs/component_contracts.md
+```
+
+## Evaluation Report
+
+Results for all 12 provided test cases including outcomes, traces, and tradeoffs:
+
+```text
+docs/eval_report_full.md
 ```
 
 ---
 
-## 2. Information Extraction Agent
+# High-Level Architecture
 
-Responsibilities:
-
-* OCR processing
-* Text extraction
-* Structured field extraction
-
-Extracted fields:
-
-* Patient Details
-* Doctor Details
-* Diagnosis
-* Medicines
-* Treatment Information
-* Billing Information
+```text
+User
+ │
+ ▼
+Streamlit UI
+ │
+ ▼
+Claim Processor
+ │
+ ├── Document Validation Agent
+ ├── Information Extraction Agent
+ ├── Policy Adjudication Engine
+ ├── Fraud Detection Agent
+ └── Decision Engine
+ │
+ ▼
+Decision + Trace
+```
 
 ---
 
-## 3. Policy Adjudication Engine
+# Technology Choices
 
-Responsibilities:
+| Technology                 | Why It Was Chosen                                     |
+| -------------------------- | ----------------------------------------------------- |
+| Python                     | Fast development, strong AI ecosystem                 |
+| Streamlit                  | Rapid UI development with minimal frontend complexity |
+| Groq + Llama 3             | Fast inference and strong structured extraction       |
+| Tesseract OCR              | Open-source OCR for image-based documents             |
+| JSON Policy Store          | Dynamic policy configuration without code changes     |
+| Modular Agent Architecture | Better observability, testing, and scalability        |
 
+---
+
+# Key Features
+
+### Document Verification
+
+* Missing document detection
+* Wrong document detection
+* Unreadable document handling
+* Validation before processing
+
+### Information Extraction
+
+* Prescriptions
+* Hospital bills
+* Pharmacy bills
+* Diagnostic reports
+
+### Policy Adjudication
+
+* Waiting periods
 * Coverage validation
-* Waiting period checks
-* Exclusion checks
+* Exclusions
 * Co-pay calculations
-* Sub-limit calculations
-* Network hospital benefits
+* Network hospital discounts
 * Pre-authorization checks
 
----
+### Explainability
 
-## 4. Fraud Detection Agent
+Every decision includes a complete trace showing:
 
-Responsibilities:
+* What was checked
+* What passed
+* What failed
+* Why the final decision was reached
 
-* Suspicious pattern detection
-* Same-day claim analysis
-* High-value claim flagging
+### Fault Tolerance
 
-Outputs:
+The pipeline gracefully handles:
 
-```json
-{
-  "risk_score": 0.21,
-  "flags": []
-}
-```
+* OCR failures
+* LLM failures
+* Parsing errors
+* Missing fields
 
----
-
-## 5. Decision Engine
-
-Responsibilities:
-
-* Aggregate all agent outputs
-* Generate final decision
-* Compute confidence score
-* Produce explanation trace
+without crashing the system.
 
 ---
 
-# 📋 Component Contracts
+# Setup
 
-## Document Validator
-
-### Input
-
-```python
-validate_documents(
-    claim_category,
-    uploaded_documents
-)
-```
-
-### Output
-
-```json
-{
-  "valid": true,
-  "message": "",
-  "provided_types": []
-}
-```
-
----
-
-## Extraction Agent
-
-### Input
-
-```python
-extract_document(file)
-```
-
-### Output
-
-```json
-{
-  "fields": {},
-  "confidence": 0.95
-}
-```
-
----
-
-## Policy Engine
-
-### Input
-
-```python
-evaluate_claim(
-    member_id,
-    claim_data,
-    policy_data
-)
-```
-
-### Output
-
-```json
-{
-  "approved": true,
-  "approved_amount": 1350,
-  "reasons": []
-}
-```
-
----
-
-## Decision Engine
-
-### Output
-
-```json
-{
-  "decision": "APPROVED",
-  "approved_amount": 1350,
-  "confidence": 0.92,
-  "trace": []
-}
-```
-
----
-
-# 🚀 Setup & Installation
-
-## Clone Repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/mokakrishna21/PlumAssmnt.git
 cd PlumAssmnt
 ```
 
-## Install Dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Configure Environment
-
-Create a `.env` file:
+Create `.env`:
 
 ```env
 GROQ_API_KEY=YOUR_API_KEY
 ```
 
-## Run Application
+Run the application:
 
 ```bash
 streamlit run app.py
 ```
 
-Application will be available at:
-
-```text
-http://localhost:8501
-```
-
 ---
 
-# 📘 Usage Guide
-
-1. Select Member
-2. Select Claim Category
-3. Enter Claim Amount
-4. Upload Documents
-5. Assign Document Types
-6. Click **Process Claim**
-
-The system will:
-
-* Validate documents
-* Extract information
-* Apply policy rules
-* Detect fraud signals
-* Produce final decision
-* Generate explainability trace
-
----
-
-# 🧪 Evaluation Report
+# Evaluation Summary
 
 The system was evaluated against all 12 provided test cases.
 
-| Test Case | Status |
-| --------- | ------ |
-| TC001     | ✅      |
-| TC002     | ✅      |
-| TC003     | ⚠️     |
-| TC004     | ✅      |
-| TC005     | ✅      |
-| TC006     | ✅      |
-| TC007     | ✅      |
-| TC008     | ⚠️     |
-| TC009     | ⚠️     |
-| TC010     | ✅      |
-| TC011     | ✅      |
-| TC012     | ✅      |
+| Metric                      | Result |
+| --------------------------- | ------ |
+| Total Test Cases            | 12     |
+| Exact Matches               | 9      |
+| Tradeoffs / Partial Matches | 3      |
+| System Crashes              | 0      |
 
-### Summary
+See:
 
-* 12/12 scenarios successfully handled
-* 9/12 exactly match expected outputs
-* 3/12 represent deliberate design tradeoffs or simplified implementations
+```text
+docs/eval_report_full.md
+```
+
+for complete traces and analysis.
 
 ---
 
-# ⚖️ Design Tradeoffs
+# Design Philosophy
 
-## Rule Engine vs LLM Adjudication
+A key design decision was separating:
 
-Considered:
+```text
+LLMs → Information Extraction
 
-* LLM-generated approval decisions
+Rules → Claim Decisions
+```
 
-Rejected because:
+This provides:
 
-* Non-deterministic
-* Difficult to audit
-* Difficult to reproduce
-
-Chosen:
-
-* LLMs for extraction
-* Rules for adjudication
+* Deterministic outcomes
+* Better explainability
+* Easier auditing
+* Greater operational trust
 
 ---
 
-## OCR + LLM vs Vision Models
-
-Considered:
-
-* Vision-language models
-
-Rejected because:
-
-* Higher inference cost
-* Higher latency
-
-Chosen:
-
-* OCR + LLM pipeline
-
-Future:
-
-* Upgrade to VLM-based extraction
-
----
-
-## Monolith vs Microservices
-
-Considered:
-
-* Independent services per agent
-
-Rejected because:
-
-* Unnecessary complexity for assignment scope
-
-Chosen:
-
-* Modular monolith
-
-Future:
-
-* Queue-based distributed architecture
-
----
-
-# ⚠️ Limitations
-
-Current limitations:
-
-* Handwritten document OCR accuracy
-* No persistent database
-* Simplified fraud detection
-* Heuristic confidence scoring
-* Synchronous processing
-
-These limitations are documented and can be addressed without major architectural changes.
-
----
-
-# 🔮 Future Improvements
-
-## Engineering
-
-* PostgreSQL persistence
-* Redis caching
-* Queue-based processing
-* Background workers
-
-## AI
-
-* Vision-language extraction
-* Advanced fraud detection
-* Retrieval-Augmented Policy Reasoning
-
-## Operations
-
-* Manual review dashboard
-* Analytics and reporting
-* Claim history exploration
-
----
-
-# 🎉 Conclusion
-
-This system demonstrates an explainable, policy-driven, and fault-tolerant approach to health insurance claim adjudication.
-
-Key strengths include:
-
-* Deterministic decision making
-* Full explainability
-* Policy-driven architecture
-* Graceful degradation
-* Clear component boundaries
-* Scalability-ready design
-
-The architecture provides a strong foundation for automating health insurance claim processing while maintaining transparency, reliability, and operational trust.
-
----
