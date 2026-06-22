@@ -1,0 +1,6 @@
+streamlit
+groq
+pytesseract
+pdfplumber
+Pillow
+python-dotenv
